@@ -1,0 +1,20 @@
+pipeline {
+    agent none
+    options {
+        timeout(time: 20, unit: 'MINUTES')
+        timestamps()
+        buildDiscarder(logRotator(numToKeepStr: "10"))
+        disableConcurrentBuilds()
+    }
+    stages {
+        stage ("Tests") {
+            
+            steps {
+                script {
+                    echo GIT_COMMIT
+                }
+            }
+            post { always { cleanWs() } }
+        }
+    }
+}                        
